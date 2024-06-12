@@ -1,5 +1,16 @@
 {
+  "name": "diploma-project",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "npm install && npm run start --prefix server && npm run start --prefix client",
+    "build": "npm install && npm run build --prefix client"
+  },
   "dependencies": {
     "mongodb": "^6.7.0"
+  },
+  "devDependencies": {},
+  "engines": {
+    "node": ">=14.0.0"
   }
 }
