@@ -3,9 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "npm install && npm run start --prefix server && npm run start --prefix client",
-    "build": "npm install && npm run build --prefix client",
-    "heroku-postbuild": "npm install --prefix client && npm run build --prefix client"
+    "start": "node server/server.js",
+    "build": "cd client && npm run build"
   },
   "dependencies": {
     "mongodb": "^6.7.0",
