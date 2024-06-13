@@ -65,12 +65,14 @@ app.get('/api/products', async (req, res) => {
   try {
     const { businessType, sectors, selectionType, configType } = req.query;
     console.log('Query:', req.query);
+
+    const parsedSectors = Array.isArray(sectors) ? sectors : [sectors];
     const softwareQuery = {
-      sectors: { $in: Array.isArray(sectors) ? [...sectors, 'all'] : [sectors, 'all'] },
+      sectors: { $in: [...parsedSectors, 'all'] },
       type: 'software'
     };
     const hardwareQuery = {
-      sectors: { $in: Array.isArray(sectors) ? [...sectors, 'all'] : [sectors, 'all'] },
+      sectors: { $in: [...parsedSectors, 'all'] },
       type: 'hardware'
     };
 
