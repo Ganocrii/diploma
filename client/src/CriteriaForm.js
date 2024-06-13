@@ -46,7 +46,7 @@ const CriteriaForm = ({ criteria, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get('http://localhost:3001/api/products', {
+      const response = await axios.get('https://diploma-seven-ruddy.vercel.app//api/products', {
         params: currentCriteria
       });
       console.log('Fetched products:', response.data);
