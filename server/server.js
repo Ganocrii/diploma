@@ -64,6 +64,7 @@ app.post('/api/products', async (req, res) => {
 app.get('/api/products', async (req, res) => {
   try {
     const { businessType, sectors, selectionType, configType } = req.query;
+    console.log('Query:', req.query);
     const softwareQuery = {
       sectors: { $in: Array.isArray(sectors) ? [...sectors, 'all'] : [sectors, 'all'] },
       type: 'software'
@@ -83,7 +84,7 @@ app.get('/api/products', async (req, res) => {
     const softwareProducts = await Product.find(softwareQuery);
     const hardwareProducts = await Product.find(hardwareQuery);
     const products = [...softwareProducts, ...hardwareProducts];
-
+    console.log('Products:', products);
     res.json(products);
   } catch (err) {
     console.error('Error fetching products:', err);  // Логирование ошибки
