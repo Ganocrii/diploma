@@ -33,21 +33,25 @@ const ConfigurationResult = ({ products, configurationType, sectors, performance
     switch: []
   };
 
-  products.forEach(product => {
-    if (configurationType === 'software' && product.type === 'software') {
-      categorizedProducts[product.equipmentType].push(product);
-    } else if (configurationType === 'hardware' && product.type === 'hardware') {
-      if (product.performance === performanceType) {
+  if (Array.isArray(products)) {
+    products.forEach(product => {
+      if (configurationType === 'software' && product.type === 'software') {
         categorizedProducts[product.equipmentType].push(product);
+      } else if (configurationType === 'hardware' && product.type === 'hardware') {
+        if (product.performance === performanceType) {
+          categorizedProducts[product.equipmentType].push(product);
+        }
+      } else if (configurationType === 'both') {
+        if (product.type === 'software') {
+          categorizedProducts[product.equipmentType].push(product);
+        } else if (product.type === 'hardware' && product.performance === performanceType) {
+          categorizedProducts[product.equipmentType].push(product);
+        }
       }
-    } else if (configurationType === 'both') {
-      if (product.type === 'software') {
-        categorizedProducts[product.equipmentType].push(product);
-      } else if (product.type === 'hardware' && product.performance === performanceType) {
-        categorizedProducts[product.equipmentType].push(product);
-      }
-    }
-  });
+    });
+  } else {
+    console.error('Products is not an array:', products);
+  }
 
   return (
     <div className="configuration-result">
@@ -62,7 +66,7 @@ const ConfigurationResult = ({ products, configurationType, sectors, performance
                 <img src={product.image} alt={product.name} className="product-image" />
                 <h2>{product.name}</h2>
                 <p>{product.description}</p>
-                {product.type === 'hardware' && (
+                {product.type === 'hardware' && product.specs && (
                   <ul className="specs">
                     {Object.entries(product.specs).map(([key, value]) => (
                       <li key={key}>{key}: {value}</li>
