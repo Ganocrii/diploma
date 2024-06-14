@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CriteriaForm.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const CriteriaForm = ({ criteria, onSubmit }) => {
   const [currentCriteria, setCurrentCriteria] = useState({
@@ -12,6 +12,7 @@ const CriteriaForm = ({ criteria, onSubmit }) => {
   });
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     if (criteria) {
@@ -46,7 +47,7 @@ const CriteriaForm = ({ criteria, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}/products`, {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/products`, {
         params: currentCriteria
       });
       console.log('Fetched products:', response.data);

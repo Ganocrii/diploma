@@ -37,7 +37,7 @@ function App() {
   const [products, setProducts] = useState([]);
 
   const handleCriteriaSubmit = (data) => {
-    setProducts(data.products);
+    setProducts(data.products || []);  // Ensure products is an array
     setCriteria({
       businessType: data.businessType,
       sectors: data.sectors,

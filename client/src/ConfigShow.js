@@ -6,7 +6,7 @@ const ConfigurationResult = ({ products, configurationType, sectors, performance
   const navigate = useNavigate();
 
   const handleBackClick = () => {
-    navigate('/criteria');
+    navigate('/criteria', { state: { criteria: { configurationType, sectors, performanceType }, reset: false } });
   };
 
   const categories = {
