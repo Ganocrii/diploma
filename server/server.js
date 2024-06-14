@@ -3,6 +3,7 @@ const { MongoClient, ServerApiVersion } = require('mongodb');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 require('dotenv').config();
+const productsRouter = require('./routes/products');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -24,7 +25,7 @@ async function connectDB() {
     console.log("Connected successfully to MongoDB");
     db = client.db('projectdb');
     // Инициализируем маршрутизатор после подключения к базе данных
-    const productsRouter = require('./routes/products')(db);
+    productsRouter(db);
     app.use('/api/products', productsRouter);
   } catch (err) {
     console.error('Error connecting to MongoDB:', err.message);
