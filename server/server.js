@@ -25,8 +25,7 @@ async function connectDB() {
     console.log("Connected successfully to MongoDB");
     db = client.db('projectdb');
     // Инициализируем маршрутизатор после подключения к базе данных
-    productsRouter(db);
-    app.use('/api/products', productsRouter);
+    app.use('/api/products', productsRouter(db));
   } catch (err) {
     console.error('Error connecting to MongoDB:', err.message);
   }

@@ -46,7 +46,7 @@ const CriteriaForm = ({ criteria, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.get('${process.env.REACT_APP_API_URL}/products', {
+      const response = await axios.get(`${process.env.REACT_APP_API_URL}/products`, {
         params: currentCriteria
       });
       console.log('Fetched products:', response.data);
