@@ -2,13 +2,20 @@ const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
 const productsRouter = require('./routes/products');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 const uri = process.env.MONGODB_URI;
+
+if (!uri) {
+  console.error('Error: MONGODB_URI is not defined in .env file');
+  process.exit(1);
+}
+
 const client = new MongoClient(uri, {
   serverApi: {
     version: ServerApiVersion.v1,
@@ -42,9 +49,9 @@ app.get('/', (req, res) => {
 });
 
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static('client/build'));
+  app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
   app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
   });
 }
 
