@@ -1,10 +1,8 @@
 const express = require('express');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 const cors = require('cors');
-const bodyParser = require('body-parser');
 const path = require('path');
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') });
-const productsRouter = require('./routes/products');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -35,8 +33,7 @@ async function connectDB() {
     await client.connect();
     console.log("Connected successfully to MongoDB");
     db = client.db('projectdb');
-    // Инициализируем маршрутизатор после подключения к базе данных
-    app.use('/api/products', productsRouter(db));
+    app.use('/api/products', require('./routes/products')(db));
   } catch (err) {
     console.error('Error connecting to MongoDB:', err.message);
   }
@@ -47,13 +44,6 @@ connectDB().catch(console.dir);
 app.get('/', (req, res) => {
   res.send('Hello World!');
 });
-
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '..', 'client', 'build')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '..', 'client', 'build', 'index.html'));
-  });
-}
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
