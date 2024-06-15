@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CriteriaForm.css';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 
 const CriteriaForm = ({ criteria, onSubmit }) => {
   const [currentCriteria, setCurrentCriteria] = useState({
@@ -12,7 +12,6 @@ const CriteriaForm = ({ criteria, onSubmit }) => {
   });
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     if (criteria) {
