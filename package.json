@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node server/server.js",
-    "build": "dotenv -e .env react-scripts build",
-    "dev": "concurrently \"dotenv -e .env react-scripts start\" \"nodemon server/server.js\""
+    "build": "cd client && npm install && npm run build"
   },
   "dependencies": {
     "axios": "^0.24.0",
