@@ -9,6 +9,18 @@ const productsRouter = require('./routes/products');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Serve static files from the React app
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+// The "catchall" handler: for any request that doesn't match the above, send back React's index.html file.
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client/build/index.html'));
+});
+
 const uri = process.env.MONGODB_URI;
 
 if (!uri) {
@@ -39,10 +51,6 @@ async function connectDB() {
 }
 
 connectDB().catch(console.dir);
-
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
